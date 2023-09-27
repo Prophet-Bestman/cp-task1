@@ -1,5 +1,5 @@
 interface IAttributes {
-  coverImage: string;
+  coverImage: string | ArrayBuffer | null;
   personalInformation: IPersonalInformation;
   profile: Profile;
   customisedQuestions: IAddedQuestion[];

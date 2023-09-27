@@ -36,6 +36,7 @@ const AddQuestion = ({ type }: { type: QuestionTypes }) => {
     } else appendToCustomQuestions(payload);
 
     form.resetFields();
+    setShowQuestion(false);
   };
 
   return (

@@ -22,11 +22,11 @@ const apiUrl =
 
 const FormBuilder = () => {
   const [coverImage, setCoverImage] = useState<any>();
-  const { formState } = useFormState();
-
-  console.log("RENDER");
+  const { formState, updateImage } = useFormState();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = () => {
+    setIsLoading(true);
     const headers = {
       "Content-Type": "application/json",
     };
@@ -49,13 +49,12 @@ const FormBuilder = () => {
         }
         return response.text();
       })
-      .then((responseData) => {
-        console.log("Response Data:", responseData);
+      .then(() => {
         message.success("Successfully updated data");
       })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+      .catch(() => message.error("Failed to submit form"));
+
+    setIsLoading(false);
   };
 
   const props: UploadProps = {
@@ -64,16 +63,22 @@ const FormBuilder = () => {
     onChange(info) {
       const { status } = info.file;
 
-      console.log(info.file.size);
-
       if (!!info?.file?.size && info?.file.size < 1024000) {
         if (status === "done" && info.file.originFileObj) {
+          const file = info.file.originFileObj;
           setCoverImage(URL.createObjectURL(info.file.originFileObj));
+
+          // Convert image to binary string
+          const data = new FileReader();
+          data.addEventListener("load", () => {
+            updateImage(data.result);
+            setCoverImage(data.result);
+          });
+          data.readAsDataURL(file);
         } else if (status === "error") {
           message.error(`${info.file.name} file upload failed.`);
         }
       } else {
-        console.log("ERROR....!!!!");
         message.error({
           content: `Max file size is 1MB`,
           key: generateRandomId(),
@@ -141,7 +146,15 @@ const FormBuilder = () => {
       <ProfileInformationForm />
       <AdditionalQuestions />
 
-      <Button onClick={handleSubmit}>Submit</Button>
+      <div className="flex justify-end my-8 ">
+        <Button
+          className="font-bold"
+          loading={isLoading}
+          onClick={handleSubmit}
+        >
+          Submit
+        </Button>
+      </div>
     </div>
   );
 };

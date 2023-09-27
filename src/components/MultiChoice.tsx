@@ -19,7 +19,6 @@ const MultiChoice = () => {
       >
         {(fields, { add }) => (
           <>
-            {console.log(fields)}
             {fields.map((field, index) => (
               <Form.Item style={{ margin: 0 }} required={false} key={field.key}>
                 <div className="flex items-center w-full gap-2">

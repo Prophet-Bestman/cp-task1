@@ -8,6 +8,7 @@ interface IFormContext {
   appendToPersonalQuestions: (args: IAddedQuestion) => void;
   appendToProfileQuestions: (args: IAddedQuestion) => void;
   appendToCustomQuestions: (args: IAddedQuestion) => void;
+  updateImage: (args: string | ArrayBuffer | null) => void;
   updatePeronsalQuestionList: (
     question: IAddedQuestion,
     action: "edit" | "delete"
@@ -34,6 +35,10 @@ export function useFormState() {
 
 const FormProvider = ({ children }: PropsWithChildren) => {
   const [formState, setFormState] = useState(attributes);
+
+  const updateImage = (img: string | ArrayBuffer | null) => {
+    setFormState({ ...formState, coverImage: img });
+  };
 
   const updatePersonalInfo = <T extends keyof IPersonalInformation>(
     fieldName: T,
@@ -183,6 +188,7 @@ const FormProvider = ({ children }: PropsWithChildren) => {
         updateProfileQuestionList,
         appendToCustomQuestions,
         updateCustomQuestionList,
+        updateImage,
       }}
     >
       {children}

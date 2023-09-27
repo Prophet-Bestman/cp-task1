@@ -43,7 +43,6 @@ const EditQuestion = ({
     } else if (type === "Profile") {
       updateProfileQuestionList(payload, "edit");
     } else {
-      console.log("EDITING....");
       updateCustomQuestionList(payload, "edit");
     }
 
