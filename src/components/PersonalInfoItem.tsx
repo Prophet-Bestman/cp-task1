@@ -28,8 +28,10 @@ const PersonalInfoItem = ({ title, fieldName, isEditable }: Props) => {
       {isEditable && (
         <div className="flex items-center gap-8">
           <Checkbox
-            //  @ts-ignore
-            value={formState?.personalInformation[fieldName].internalUse}
+            defaultChecked={
+              //  @ts-ignore
+              formState?.personalInformation[fieldName].internalUse
+            }
             onChange={(e) =>
               updatePersonalInfo(fieldName, "internalUse", e.target.checked)
             }
@@ -40,12 +42,13 @@ const PersonalInfoItem = ({ title, fieldName, isEditable }: Props) => {
           <div className="flex items-center text-[15px] gap-2">
             <Switch
               //  @ts-ignore
-              value={formState?.personalInformation[fieldName].show}
+              defaultChecked={formState?.personalInformation[fieldName].show}
               onChange={(e) => {
-                updatePersonalInfo(fieldName, "show", !e);
+                updatePersonalInfo(fieldName, "show", e);
               }}
             />
-            Hide
+            {/* @ts-ignore */}
+            {formState?.personalInformation[fieldName].show ? "Show" : "Hide"}
           </div>
         </div>
       )}

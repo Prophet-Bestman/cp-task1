@@ -1,20 +1,21 @@
-export function generateRandomId(length: number): string {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
+export function generateRandomId(): string {
+  const segments: number[] = Array(5)
+    .fill(0)
+    .map(() => Math.floor(Math.random() * 65536));
 
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * characters.length);
-    result += characters.charAt(randomIndex);
-  }
+  const formattedSegments: string[] = segments.map((segment) =>
+    segment.toString(16).padStart(4, "0")
+  );
 
-  return result;
+  // Join the segments with hyphens
+  const randomId = formattedSegments.join("-");
+
+  return randomId;
 }
 
 export function shapeObjectToQuestionObject(
   obj: Partial<IAddedQuestion>
 ): IAddedQuestion {
-  // Define default values for each property
   const defaults: IAddedQuestion = {
     id: "",
     type: "Paragraph",
@@ -23,6 +24,7 @@ export function shapeObjectToQuestionObject(
     maxChoice: 0,
     disqualify: false,
     other: false,
+    key: "",
   };
 
   // Merge the provided object with default values

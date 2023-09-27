@@ -48,7 +48,7 @@ const PersonalInformationForm = () => {
         {formState.personalInformation.personalQuestions.map(
           (personalQuestion) => (
             <QuestionItem
-              key={personalQuestion.id}
+              key={personalQuestion.key}
               personalQuestion={personalQuestion}
               type="Personal Info"
             />

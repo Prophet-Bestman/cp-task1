@@ -17,7 +17,7 @@ const ProfileInfoItem = ({ title, fieldName }: Props) => {
       <div className="flex items-center gap-8">
         <Checkbox
           //  @ts-ignore
-          value={formState?.profile[fieldName].mandatory}
+          defaultChecked={formState?.profile[fieldName].mandatory}
           onChange={(e) =>
             updatePersonalInfo(fieldName, "internalUse", e.target.checked)
           }
@@ -28,12 +28,13 @@ const ProfileInfoItem = ({ title, fieldName }: Props) => {
         <div className="flex items-center text-[15px] gap-2">
           <Switch
             //  @ts-ignore
-            value={formState?.profile[fieldName].show}
+            defaultChecked={formState?.profile[fieldName].show}
             onChange={(e) => {
-              updatePersonalInfo(fieldName, "show", !e);
+              updatePersonalInfo(fieldName, "show", e);
             }}
           />
-          Hide
+          {/* @ts-ignore */}
+          {formState?.profile[fieldName].show ? "Show" : "Hide"}
         </div>
       </div>
     </div>

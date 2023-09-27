@@ -93,7 +93,7 @@ const FormProvider = ({ children }: PropsWithChildren) => {
     let initialQuestions = formState.personalInformation.personalQuestions;
     if (action === "edit") {
       for (let i = 0; i < initialQuestions.length; i++) {
-        if (initialQuestions[i].id === question.id) {
+        if (initialQuestions[i].key === question.key) {
           initialQuestions[i] = {
             ...initialQuestions[i],
             ...question,
@@ -103,7 +103,7 @@ const FormProvider = ({ children }: PropsWithChildren) => {
       }
     } else {
       initialQuestions = initialQuestions.filter(
-        (initialQuestion) => initialQuestion.id !== question.id
+        (initialQuestion) => initialQuestion.key !== question.key
       );
     }
     setFormState({
@@ -123,7 +123,7 @@ const FormProvider = ({ children }: PropsWithChildren) => {
     let initialQuestions = formState.profile.profileQuestions;
     if (action === "edit") {
       for (let i = 0; i < initialQuestions.length; i++) {
-        if (initialQuestions[i].id === question.id) {
+        if (initialQuestions[i].key === question.key) {
           initialQuestions[i] = {
             ...initialQuestions[i],
             ...question,
@@ -133,7 +133,7 @@ const FormProvider = ({ children }: PropsWithChildren) => {
       }
     } else {
       initialQuestions = initialQuestions.filter(
-        (initialQuestion) => initialQuestion.id !== question.id
+        (initialQuestion) => initialQuestion.key !== question.key
       );
     }
     setFormState({
@@ -153,7 +153,7 @@ const FormProvider = ({ children }: PropsWithChildren) => {
     let initialQuestions = formState.customisedQuestions;
     if (action === "edit") {
       for (let i = 0; i < initialQuestions.length; i++) {
-        if (initialQuestions[i].id === question.id) {
+        if (initialQuestions[i].key === question.key) {
           initialQuestions[i] = {
             ...initialQuestions[i],
             ...question,
@@ -163,7 +163,7 @@ const FormProvider = ({ children }: PropsWithChildren) => {
       }
     } else {
       initialQuestions = initialQuestions.filter(
-        (initialQuestion) => initialQuestion.id !== question.id
+        (initialQuestion) => initialQuestion.key !== question.key
       );
     }
     setFormState({

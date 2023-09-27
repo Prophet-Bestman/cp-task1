@@ -29,10 +29,13 @@ const EditQuestion = ({
 
   const [form] = Form.useForm();
 
-  const onFinish = (data: any) => {
+  const onFinish = (data: IAddedQuestion) => {
     const payload = shapeObjectToQuestionObject({
-      id: defaultValue.id,
       ...data,
+      id: defaultValue.id,
+      key: defaultValue.key,
+      maxChoice: Number.parseInt(`${data.maxChoice}`) || 0,
+      other: !!data.other,
     });
 
     if (type === "Personal Info") {
@@ -60,8 +63,8 @@ const EditQuestion = ({
     <div className="pt-8">
       <Form
         form={form}
-        name={defaultValue.id}
-        id={generateRandomId(10)}
+        name={defaultValue.key}
+        id={generateRandomId()}
         layout="vertical"
         onFinish={onFinish}
         autoComplete="off"
@@ -83,10 +86,10 @@ const EditQuestion = ({
             placeholder="Select Type"
             options={[
               { value: "Paragraph", label: "Paragraph" },
-              { value: "Short Answer", label: "Short Answer" },
+              { value: "ShortAnswer", label: "Short Answer" },
               { value: "Dropdown", label: "Dropdown" },
-              { value: "Yes/No", label: "Yes/No" },
-              { value: "Multiple Choice", label: "Multiple Choice" },
+              { value: "YesNo", label: "Yes/No" },
+              { value: "MultipleChoice", label: "Multiple Choice" },
             ]}
           />
         </Form.Item>
@@ -104,7 +107,7 @@ const EditQuestion = ({
           <Input disabled={!selectedType} style={{ width: "100%" }} />
         </Form.Item>
 
-        {selectedType === "Multiple Choice" && <MultiChoice />}
+        {selectedType === "MultipleChoice" && <MultiChoice />}
         {selectedType === "Dropdown" && <DropDown />}
         {selectedType === "disqualify" && (
           <Form.Item

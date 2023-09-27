@@ -19,6 +19,7 @@ const MultiChoice = () => {
       >
         {(fields, { add }) => (
           <>
+            {console.log(fields)}
             {fields.map((field, index) => (
               <Form.Item style={{ margin: 0 }} required={false} key={field.key}>
                 <div className="flex items-center w-full gap-2">
@@ -34,7 +35,6 @@ const MultiChoice = () => {
                         message: "Please input type or delete this field.",
                       },
                     ]}
-                    //   noStyle
                   >
                     <Input placeholder="Type here" />
                   </Form.Item>
@@ -53,7 +53,12 @@ const MultiChoice = () => {
           </>
         )}
       </Form.List>
-      <Form.Item className="mt-0 mb-10" name="other" valuePropName="checked">
+      <Form.Item
+        initialValue={false}
+        className="mt-0 mb-10"
+        name="other"
+        valuePropName="checked"
+      >
         <Checkbox>Enable “Other” option</Checkbox>
       </Form.Item>
       <Form.Item
@@ -71,6 +76,7 @@ const MultiChoice = () => {
         <Input
           placeholder="Enter number of choice allowed here"
           style={{ width: "100%" }}
+          type="number"
         />
       </Form.Item>
     </>

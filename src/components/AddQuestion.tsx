@@ -20,10 +20,13 @@ const AddQuestion = ({ type }: { type: QuestionTypes }) => {
 
   const [form] = Form.useForm();
 
-  const onFinish = (data: any) => {
+  const onFinish = (data: IAddedQuestion) => {
     const payload = shapeObjectToQuestionObject({
-      id: generateRandomId(10),
       ...data,
+      key: generateRandomId(),
+      id: "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+      maxChoice: Number.parseInt(`${data.maxChoice}`) || 0,
+      other: !!data.other,
     });
 
     if (type === "Personal Info") {
@@ -41,7 +44,7 @@ const AddQuestion = ({ type }: { type: QuestionTypes }) => {
         <Form
           form={form}
           name="add question"
-          id={generateRandomId(10)}
+          id={generateRandomId()}
           layout="vertical"
           onFinish={onFinish}
           autoComplete="off"
@@ -63,11 +66,10 @@ const AddQuestion = ({ type }: { type: QuestionTypes }) => {
               placeholder="Select Type"
               options={[
                 { value: "Paragraph", label: "Paragraph" },
-                { value: "Short Answer", label: "Short Answer" },
+                { value: "ShortAnswer", label: "Short Answer" },
                 { value: "Dropdown", label: "Dropdown" },
-                { value: "Yes/No", label: "Yes/No" },
-                { value: "Multiple Choice", label: "Multiple Choice" },
-                // { value: "Number", label: "Number" },
+                { value: "YesNo", label: "Yes/No" },
+                { value: "MultipleChoice", label: "Multiple Choice" },
               ]}
             />
           </Form.Item>
@@ -85,7 +87,7 @@ const AddQuestion = ({ type }: { type: QuestionTypes }) => {
             <Input disabled={!selectedType} style={{ width: "100%" }} />
           </Form.Item>
 
-          {selectedType === "Multiple Choice" && <MultiChoice />}
+          {selectedType === "MultipleChoice" && <MultiChoice />}
           {selectedType === "Dropdown" && <DropDown />}
           {selectedType === "disqualify" && (
             <Form.Item

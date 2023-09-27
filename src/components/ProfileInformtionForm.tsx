@@ -23,7 +23,7 @@ const ProfileInformationForm = () => {
 
         {formState.profile.profileQuestions.map((profileQuestion) => (
           <QuestionItem
-            key={profileQuestion.id}
+            key={profileQuestion.key}
             personalQuestion={profileQuestion}
             type="Profile"
           />

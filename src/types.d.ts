@@ -2,7 +2,7 @@ interface IAttributes {
   coverImage: string;
   personalInformation: IPersonalInformation;
   profile: Profile;
-  customisedQuestions: CustomisedQuestion[];
+  customisedQuestions: IAddedQuestion[];
 }
 
 interface IPersonalInformation {
@@ -28,6 +28,7 @@ interface IDefaultProfileField {
 }
 
 interface IAddedQuestion {
+  key: string;
   id: string;
   type: string;
   question: string;
@@ -41,27 +42,7 @@ interface Profile {
   education: IDefaultProfileField;
   experience: IDefaultProfileField;
   resume: IDefaultProfileField;
-  profileQuestions: ProfileQuestion[];
-}
-
-interface ProfileQuestion {
-  id: string;
-  type: string;
-  question: string;
-  choices: string[];
-  maxChoice: number;
-  disqualify: boolean;
-  other: boolean;
-}
-
-interface CustomisedQuestion {
-  id: string;
-  type: string;
-  question: string;
-  choices: string[];
-  maxChoice: number;
-  disqualify: boolean;
-  other: boolean;
+  profileQuestions: IAddedQuestion[];
 }
 
 type QuestionTypes = "Personal Info" | "Profile" | "Custom Question";

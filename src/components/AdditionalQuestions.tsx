@@ -21,7 +21,7 @@ const AdditionalQuestions = () => {
           <div className="space-y-5 mt-7 ">
             {formState.customisedQuestions.map((customQuestion) => (
               <QuestionItem
-                key={customQuestion.id}
+                key={customQuestion.key}
                 personalQuestion={customQuestion}
                 type="Custom Question"
               />

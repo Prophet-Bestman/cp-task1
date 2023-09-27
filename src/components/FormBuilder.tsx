@@ -1,12 +1,13 @@
-import { Upload, UploadProps, message } from "antd";
-import { InboxOutlined } from "@ant-design/icons";
-
-import { MainLayout } from "../layouts";
+import { Button, Upload, UploadProps, message } from "antd";
 import { useState } from "react";
+
 import { CloseIcon } from "../assets/Icons";
 import PersonalInformationForm from "./PersonalInformationForm";
 import ProfileInformationForm from "./ProfileInformtionForm";
 import AdditionalQuestions from "./AdditionalQuestions";
+import { useFormState } from "../contexts/FormProvider";
+import upload from "../assets/upload.svg";
+import { generateRandomId } from "../utils";
 
 const { Dragger } = Upload;
 
@@ -16,8 +17,46 @@ const dummyRequest = ({ onSuccess }: any) => {
   }, 0);
 };
 
+const apiUrl =
+  "http://127.0.0.1:4010/api/583.9696999584548/programs/dolore/application-form";
+
 const FormBuilder = () => {
   const [coverImage, setCoverImage] = useState<any>();
+  const { formState } = useFormState();
+
+  console.log("RENDER");
+
+  const handleSubmit = () => {
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    const payload: any = JSON.stringify({
+      data: {
+        id: "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+        type: "applicationForm",
+        attributes: formState,
+      },
+    });
+
+    fetch(apiUrl, {
+      method: "PUT",
+      headers: headers,
+      body: payload,
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then((responseData) => {
+        console.log("Response Data:", responseData);
+        message.success("Successfully updated data");
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   const props: UploadProps = {
     name: "file",
@@ -25,10 +64,20 @@ const FormBuilder = () => {
     onChange(info) {
       const { status } = info.file;
 
-      if (status === "done" && info.file.originFileObj) {
-        setCoverImage(URL.createObjectURL(info.file.originFileObj));
-      } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+      console.log(info.file.size);
+
+      if (!!info?.file?.size && info?.file.size < 1024000) {
+        if (status === "done" && info.file.originFileObj) {
+          setCoverImage(URL.createObjectURL(info.file.originFileObj));
+        } else if (status === "error") {
+          message.error(`${info.file.name} file upload failed.`);
+        }
+      } else {
+        console.log("ERROR....!!!!");
+        message.error({
+          content: `Max file size is 1MB`,
+          key: generateRandomId(),
+        });
       }
     },
   };
@@ -71,10 +120,12 @@ const FormBuilder = () => {
                   background: "white",
                 }}
                 {...props}
+                accept="image/*"
               >
-                <p className="ant-upload-drag-icon">
-                  <InboxOutlined />
-                </p>
+                <div className="flex justify-center mb-2">
+                  {/* <InboxOutlined /> */}
+                  <img src={upload} alt="" />
+                </div>
                 <p className="font-semibold ant-upload-text">
                   Upload cover image
                 </p>
@@ -89,6 +140,8 @@ const FormBuilder = () => {
       <PersonalInformationForm />
       <ProfileInformationForm />
       <AdditionalQuestions />
+
+      <Button onClick={handleSubmit}>Submit</Button>
     </div>
   );
 };
