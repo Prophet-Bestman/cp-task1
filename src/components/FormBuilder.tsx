@@ -17,8 +17,9 @@ const dummyRequest = ({ onSuccess }: any) => {
   }, 0);
 };
 
-const apiUrl =
-  "http://127.0.0.1:4010/api/583.9696999584548/programs/dolore/application-form";
+const apiUrl = import.meta.env.VITE_POST_URL;
+
+console.log(apiUrl);
 
 const FormBuilder = () => {
   const [coverImage, setCoverImage] = useState<any>();
