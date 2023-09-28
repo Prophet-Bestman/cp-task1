@@ -13,8 +13,7 @@ interface Props {
     | "currentResidence"
     | "idNumber"
     | "dateOfBirth"
-    | "gender"
-    | "personalQuestions";
+    | "gender";
   isEditable?: boolean;
 }
 
@@ -29,7 +28,6 @@ const PersonalInfoItem = ({ title, fieldName, isEditable }: Props) => {
         <div className="flex items-center gap-8">
           <Checkbox
             defaultChecked={
-              //  @ts-ignore
               formState?.personalInformation[fieldName].internalUse
             }
             onChange={(e) =>
@@ -41,13 +39,11 @@ const PersonalInfoItem = ({ title, fieldName, isEditable }: Props) => {
 
           <div className="flex items-center text-[15px] gap-2">
             <Switch
-              //  @ts-ignore
               defaultChecked={formState?.personalInformation[fieldName].show}
               onChange={(e) => {
                 updatePersonalInfo(fieldName, "show", e);
               }}
             />
-            {/* @ts-ignore */}
             {formState?.personalInformation[fieldName].show ? "Show" : "Hide"}
           </div>
         </div>

@@ -72,7 +72,6 @@ const EditQuestion = ({
         <Form.Item
           label={<div className="text-[20px] font-semibold">Type</div>}
           name="type"
-          id=""
           rules={[
             {
               required: true,
